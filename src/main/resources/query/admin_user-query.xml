@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
+	default-lazy-init="true">
+
+	<bean id="admin_user-query" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<!-- if SQL, end with _sql -->
+				<!-- if HQL, end with _hql -->
+				
+
+
+				<entry key="findUserList_sql">
+					<value>
+						<![CDATA[
+							SELECT
+								doct.id,
+								doct.REAL_NAME realName,
+								doct.MOBILE mobile,
+								doct.TITLE title,
+								doct.TYPE type,
+								doct.OPEN_ID openid,
+								doct.EXT_NO extNo,
+								doct.CREATED_ON createdOn,
+								doct.cas_user_id casUserId,
+								'' nickName,
+								dept.DEPARTMENT_NAME departmentName,
+								qrfile.LOCATION qrcode,
+								logofile.LOCATION logo
+							FROM
+								u_admin_user doct
+							LEFT JOIN u_org_department dept ON doct.DEPARTMENT_ID = dept.ID
+							LEFT JOIN upload_file_info qrfile ON qrfile.ID = doct.QRCODE
+							LEFT JOIN upload_file_info logofile ON logofile.ID = doct.LOGO
+							WHERE
+								doct.IS_OBSOLETE_DATE IS NULL
+							ORDER BY
+								doct.ORDER_ ASC,
+								doct.REAL_NAME
+					]]>
+					</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+</beans>
