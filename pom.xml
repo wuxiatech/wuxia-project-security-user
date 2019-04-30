@@ -15,7 +15,7 @@
     </properties>
     <description>Example Core Project</description>
     <packaging>jar</packaging>
-
+    <url>https://github.com/wuxiatech/wuxia-project-security-user.git</url>
     <dependencies>
         <dependency>
             <groupId>cn.wuxia.project</groupId>
