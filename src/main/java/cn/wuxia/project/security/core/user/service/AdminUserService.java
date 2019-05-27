@@ -19,7 +19,7 @@ public interface AdminUserService extends CommonService<AdminUser, String> {
 
     public AdminUser registerUser(RegisterUserDto dto) throws Exception;
 
-    public void importDoctor(InputStream inputStream) throws Exception;
+    public void importUser(InputStream inputStream) throws Exception;
 
     /**
      * 修改基本资料
@@ -38,12 +38,12 @@ public interface AdminUserService extends CommonService<AdminUser, String> {
     public void updatePasswd(RegisterUserDto dto);
 
     /**
-     * 删除医生及登录账号
+     * 删除用户及登录账号
      *
      * @param id
      * @author songlin
      */
-    public AdminUser deleteDoctor(String id);
+    public AdminUser deleteUser(String id);
 
     public AdminUser findByOpenid(String openid);
 
@@ -54,7 +54,7 @@ public interface AdminUserService extends CommonService<AdminUser, String> {
      * @param id
      * @author songlin
      */
-    public AdminUser fallbackDeleteDoctor(String id);
+    public AdminUser fallbackDeleteUser(String id);
 
 
     public List<AdminUser> findAll(String appid);

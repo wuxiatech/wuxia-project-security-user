@@ -12,15 +12,8 @@ import cn.wuxia.common.util.reflection.BeanUtil;
 import cn.wuxia.project.basic.core.conf.entity.CustomTagCategory;
 import cn.wuxia.project.basic.core.conf.service.CustomTagCategoryService;
 import cn.wuxia.project.basic.core.conf.support.DTools;
-import cn.wuxia.project.security.core.user.bean.ImportUserBean;
-import cn.wuxia.project.security.core.user.bean.ListUsers;
-import cn.wuxia.project.security.core.user.bean.RegisterUserDto;
-import cn.wuxia.project.security.core.user.dao.AdminUserDao;
-import cn.wuxia.project.security.core.user.entity.AdminUser;
-import cn.wuxia.project.security.core.user.enums.UserOperationEnum;
-import cn.wuxia.project.security.core.user.enums.UserTypeEnum;
-import cn.wuxia.project.security.core.user.service.AdminUserService;
-import cn.wuxia.project.security.core.user.service.UserOperationHistoryService;
+import cn.wuxia.project.basic.core.user.enums.UserOperationEnum;
+import cn.wuxia.project.basic.core.user.service.UserOperationHistoryService;
 import cn.wuxia.project.common.dao.CommonDao;
 import cn.wuxia.project.common.service.impl.CommonServiceImpl;
 import cn.wuxia.project.common.support.CacheConstants;
@@ -29,6 +22,13 @@ import cn.wuxia.project.security.common.MyUserDetails;
 import cn.wuxia.project.security.common.SpringSecurityUtils;
 import cn.wuxia.project.security.core.entity.SecurityUser;
 import cn.wuxia.project.security.core.service.SecurityUserService;
+import cn.wuxia.project.security.core.user.bean.ImportUserBean;
+import cn.wuxia.project.security.core.user.bean.ListUsers;
+import cn.wuxia.project.security.core.user.bean.RegisterUserDto;
+import cn.wuxia.project.security.core.user.dao.AdminUserDao;
+import cn.wuxia.project.security.core.user.entity.AdminUser;
+import cn.wuxia.project.security.core.user.enums.UserTypeEnum;
+import cn.wuxia.project.security.core.user.service.AdminUserService;
 import cn.wuxia.tools.excel.ImportExcelUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -158,12 +158,12 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
     }
 
     /**
-     * 删除医生及登录账号
+     * 删除用户及登录账号
      *
      * @param id
      * @author songlin
      */
-    public AdminUser deleteDoctor(String id) {
+    public AdminUser deleteUser(String id) {
         AdminUser ud = findById(id);
         if (ud != null && StringUtil.isNotBlank(ud.getCasUserId())) {
             securityUserService.delete(ud.getCasUserId());
@@ -173,12 +173,12 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
     }
 
     /**
-     * 回滚已删除医生及登录账号
+     * 回滚已删除用户及登录账号
      *
      * @param id
      * @author songlin
      */
-    public AdminUser fallbackDeleteDoctor(String id) {
+    public AdminUser fallbackDeleteUser(String id) {
         AdminUser ud = adminUserDao.getEntityById(id);
         SecurityUser cu = securityUserService.findById(ud.getCasUserId());
         cu.setIsObsoleteDate(null);
@@ -240,7 +240,7 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
 
     @Override
     @Deprecated
-    public void importDoctor(InputStream inputStream) throws Exception {
+    public void importUser(InputStream inputStream) throws Exception {
         List<ImportUserBean> list = ImportExcelUtil.importExcel(inputStream, ImportUserBean.class);
         // 如果错误消息不为空，则处理出错信息并返回错误的消息
 
@@ -294,7 +294,7 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
         // CacheSupport.set(key, map);
         // v = CacheSupport.get(key);
         // }
-        // return (Map<String, RegisterDoctorDto>) v;
+        // return (Map<String, RegisterUserDto>) v;
         return map;
     }
 
@@ -307,7 +307,7 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
 
     @Override
     public List<AdminUser> findAll(String appid) {
-        return adminUserDao.findAllDoctor(appid);
+        return adminUserDao.findAllUser(appid);
     }
 
     /**

@@ -8,17 +8,15 @@
 */
 package cn.wuxia.project.security.core.user.bean;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-
-import javax.xml.bind.annotation.XmlRootElement;
-
+import cn.wuxia.common.entity.ValidationEntity;
 import cn.wuxia.project.security.core.user.enums.UserGenderEnum;
 import cn.wuxia.project.security.core.user.enums.UserTypeEnum;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
-import cn.wuxia.common.entity.ValidationEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 @JsonAutoDetect
 @XmlRootElement(name = "User")

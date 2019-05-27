@@ -4,12 +4,12 @@
  */
 package cn.wuxia.project.security.core.user.dao;
 
+import cn.wuxia.common.orm.query.Pages;
+import cn.wuxia.common.spring.SpringContextHolder;
 import cn.wuxia.project.basic.core.common.BaseCommonDao;
 import cn.wuxia.project.security.core.user.bean.ListUsers;
 import cn.wuxia.project.security.core.user.entity.AdminUser;
 import cn.wuxia.project.security.core.user.enums.UserTypeEnum;
-import cn.wuxia.common.orm.query.Pages;
-import cn.wuxia.common.spring.SpringContextHolder;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +30,7 @@ public class AdminUserDao extends BaseCommonDao<AdminUser, String> {
     }
 
 
-    public List<AdminUser> findAllDoctor(String appid) {
+    public List<AdminUser> findAllUser(String appid) {
         String hql = "from AdminUser WHERE type = ? order by order_";
         String sql = "SELECT * FROM u_admin_user WHERE appid=? and type=? ORDER BY ORDER_";
         return query(sql, AdminUser.class, appid, UserTypeEnum.NORMAL);
