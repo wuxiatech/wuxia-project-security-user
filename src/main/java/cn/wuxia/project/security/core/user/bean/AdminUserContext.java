@@ -1,9 +1,13 @@
 package cn.wuxia.project.security.core.user.bean;
 
 import cn.wuxia.project.common.security.UserContext;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
 
+@Getter
+@Setter
 public class AdminUserContext extends UserContext {
 
     private String departmentId;
@@ -18,20 +22,4 @@ public class AdminUserContext extends UserContext {
         super(id, name, mobile);
     }
 
-
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
 }

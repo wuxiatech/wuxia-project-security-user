@@ -25,9 +25,9 @@ import org.springframework.stereotype.Service;
 public class UserLoginedServiceImpl implements UserLoginedService {
 
     @Autowired
-    private UserLoginedDao userLoginedDao;
+    protected UserLoginedDao userLoginedDao;
     @Autowired
-    private UserOperationHistoryService operationHistoryService;
+    protected UserOperationHistoryService operationHistoryService;
 
     /**
      * 验证密码
@@ -52,6 +52,16 @@ public class UserLoginedServiceImpl implements UserLoginedService {
         return userLoginedDao.findByCasUserId(casUserid);
     }
 
+    @Override
+    public UserLoginedData loginByWxUnionid(String appid, String unionid) {
+        return userLoginedDao.findByUnionid(unionid);
+    }
+
+    @Override
+    public UserLoginedData loginByWxOpenid(String appid, String openid) {
+        return userLoginedDao.findByOpenid(openid);
+    }
+
     /**
      * 登录之后的操作
      *
@@ -71,24 +81,25 @@ public class UserLoginedServiceImpl implements UserLoginedService {
     /**
      * copy Properties From User To UserDetails
      *
-     * @param loginedDoctorData
+     * @param loginedUserData
      * @param userLoginedDetails
      * @author songlin.li
      */
-    protected void copyPropertiesFromUserToUserDetails(AdminUserLoginedData loginedDoctorData, UserLoginedDetails userLoginedDetails) {
-        userLoginedDetails.setUid(loginedDoctorData.getId());
-        userLoginedDetails.setDisplayName(loginedDoctorData.getRealName());
-        userLoginedDetails.setMobile(loginedDoctorData.getAccountName());
-        userLoginedDetails.setOpenid(loginedDoctorData.getOpenid());
-        userLoginedDetails.setLogo(loginedDoctorData.getLogo());
-        if (StringUtil.isNotBlank(loginedDoctorData.getType())) {
-            userLoginedDetails.setType(UserTypeEnum.valueOf(loginedDoctorData.getType()));
+    protected void copyPropertiesFromUserToUserDetails(AdminUserLoginedData loginedUserData, UserLoginedDetails userLoginedDetails) {
+        userLoginedDetails.setUid(loginedUserData.getId());
+        userLoginedDetails.setDisplayName(loginedUserData.getRealName());
+        userLoginedDetails.setMobile(loginedUserData.getAccountName());
+        userLoginedDetails.setOpenid(loginedUserData.getOpenid());
+        userLoginedDetails.setLogo(loginedUserData.getLogo());
+        if (StringUtil.isNotBlank(loginedUserData.getType())) {
+            userLoginedDetails.setType(UserTypeEnum.valueOf(loginedUserData.getType()));
         }
-        if (StringUtil.isNotBlank(loginedDoctorData.getGender())) {
-            userLoginedDetails.setGender(UserGenderEnum.valueOf(loginedDoctorData.getGender()));
+        if (StringUtil.isNotBlank(loginedUserData.getGender())) {
+            userLoginedDetails.setGender(UserGenderEnum.valueOf(loginedUserData.getGender()));
         }
         AdminUserContext userContext = new AdminUserContext(userLoginedDetails.getUid(), userLoginedDetails.getDisplayName(), userLoginedDetails.getMobile());
-        userContext.setDepartmentId(loginedDoctorData.getDepartmentId());
+        userContext.setDepartmentId(loginedUserData.getDepartmentId());
+        userContext.setHeadImg(loginedUserData.getLogo());
         UserContextUtil.saveUserContext(userContext);
     }
 }

@@ -33,4 +33,22 @@ public class UserLoginedDao extends BaseCommonDao {
         }
         return BeanUtil.mapToBean(list.get(0), AdminUserLoginedData.class);
     }
+
+    public AdminUserLoginedData findByUnionid(String unionid) {
+        String sql = "select * from vw_user_logined_data where unionid=?";
+        List<Map<String, Object>> list = queryToMap(sql, unionid);
+        if (ListUtil.isEmpty(list)) {
+            return null;
+        }
+        return BeanUtil.mapToBean(list.get(0), AdminUserLoginedData.class);
+    }
+
+    public AdminUserLoginedData findByOpenid(String openid) {
+        String sql = "select * from vw_user_logined_data where openid=?";
+        List<Map<String, Object>> list = queryToMap(sql, openid);
+        if (ListUtil.isEmpty(list)) {
+            return null;
+        }
+        return BeanUtil.mapToBean(list.get(0), AdminUserLoginedData.class);
+    }
 }

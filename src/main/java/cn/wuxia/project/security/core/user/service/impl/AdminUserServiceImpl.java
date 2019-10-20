@@ -4,6 +4,7 @@
  */
 package cn.wuxia.project.security.core.user.service.impl;
 
+import cn.wuxia.common.exception.AppDaoException;
 import cn.wuxia.common.exception.AppServiceException;
 import cn.wuxia.common.orm.query.Pages;
 import cn.wuxia.common.util.DateUtil;
@@ -181,12 +182,16 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
      */
     @Override
     public AdminUser fallbackDeleteUser(String id) {
-        AdminUser ud = adminUserDao.getEntityById(id);
+        AdminUser ud = adminUserDao.findByIdIncludeLogicalDelete(id);
         SecurityUser cu = securityUserService.findById(ud.getCasUserId());
         cu.setIsObsoleteDate(null);
         ud.setIsObsoleteDate(null);
-        securityUserService.save(cu);
-        save(ud);
+        try {
+            securityUserService.save(cu);
+            save(ud);
+        } catch (AppDaoException e) {
+            throw new AppServiceException("保存失败");
+        }
         return ud;
     }
 
@@ -196,19 +201,24 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
      * @param dto
      * @author songlin
      */
+    @Override
     public void updateInfo(RegisterUserDto dto) {
         AdminUser ud = findById(dto.getId());
-        /**
-         * 如果修改手机则更新手机账号
-         */
-        if (!StringUtil.equals(dto.getMobile(), ud.getMobile()) && StringUtil.isNotBlank(dto.getMobile())) {
-            SecurityUser cu = securityUserService.findById(ud.getCasUserId());
+        try {
+            /**
+             * 如果修改手机则更新手机账号
+             */
+            if (!StringUtil.equals(dto.getMobile(), ud.getMobile()) && StringUtil.isNotBlank(dto.getMobile())) {
+                SecurityUser cu = securityUserService.findById(ud.getCasUserId());
 
-            cu.setAccountName(dto.getMobile());
-            securityUserService.save(cu);
+                cu.setAccountName(dto.getMobile());
+                securityUserService.save(cu);
+            }
+            BeanUtil.copyPropertiesWithoutNullValues(ud, dto);
+            save(ud);
+        } catch (AppDaoException e) {
+            throw new AppServiceException("保存失败");
         }
-        BeanUtil.copyPropertiesWithoutNullValues(ud, dto);
-        save(ud);
     }
 
     /**
@@ -217,6 +227,7 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
      * @param dto
      * @author songlin
      */
+    @Override
     public void updatePasswd(RegisterUserDto dto) {
         AdminUser ud = findById(dto.getId());
         /**
