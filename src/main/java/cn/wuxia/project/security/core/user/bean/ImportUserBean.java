@@ -9,7 +9,7 @@
 package cn.wuxia.project.security.core.user.bean;
 
 import cn.wuxia.tools.excel.annotation.ExcelColumn;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 
 public class ImportUserBean {
