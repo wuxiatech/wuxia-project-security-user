@@ -5,27 +5,41 @@
     <parent>
         <groupId>cn.wuxia.project</groupId>
         <artifactId>wuxia.project-parent</artifactId>
-        <version>2.4.0</version>
+        <version>2.4.2</version>
     </parent>
     <groupId>cn.wuxia.project</groupId>
     <artifactId>wuxia.project-security-user</artifactId>
     <name>Project Security User Login</name>
-    <version>2.4.0</version>
+    <version>2.4.2</version>
     <properties>
     </properties>
     <description>Example Core Project</description>
     <packaging>jar</packaging>
-    <url>https://github.com/wuxiatech/wuxia-project-security-user.git</url>
+    <url>https://github.com/wuxiatech/wuxia-project-security-user</url>
+    <developers>
+        <developer>
+            <name>lisonglin</name>
+            <email>237550195@qq.com</email>
+            <id>songlin</id>
+            <organization>wuxia.tech</organization>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>https://github.com/wuxiatech/wuxia-project-security-user/blob/master/LICENSE</url>
+        </license>
+    </licenses>
     <dependencies>
         <dependency>
             <groupId>cn.wuxia.project</groupId>
             <artifactId>wuxia.project-core</artifactId>
-            <version>[2.4.0,)</version>
+            <version>[2.4.2,)</version>
         </dependency>
         <dependency>
             <groupId>cn.wuxia.project</groupId>
             <artifactId>wuxia.project-security</artifactId>
-            <version>[2.4.0,)</version>
+            <version>[2.4.2,)</version>
         </dependency>
         <!-- 免getset -->
         <dependency>
