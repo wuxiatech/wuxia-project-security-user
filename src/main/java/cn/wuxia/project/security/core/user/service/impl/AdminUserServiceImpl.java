@@ -13,7 +13,6 @@ import cn.wuxia.common.util.reflection.BeanUtil;
 import cn.wuxia.project.basic.core.conf.entity.CustomTagCategory;
 import cn.wuxia.project.basic.core.conf.service.CustomTagCategoryService;
 import cn.wuxia.project.basic.core.conf.support.DTools;
-import cn.wuxia.project.basic.core.user.service.UserOperationHistoryService;
 import cn.wuxia.project.common.dao.CommonDao;
 import cn.wuxia.project.common.service.impl.CommonServiceImpl;
 import cn.wuxia.project.common.support.CacheConstants;
@@ -27,7 +26,6 @@ import cn.wuxia.project.security.core.user.bean.ListUsers;
 import cn.wuxia.project.security.core.user.bean.RegisterUserDto;
 import cn.wuxia.project.security.core.user.dao.AdminUserDao;
 import cn.wuxia.project.security.core.user.entity.AdminUser;
-import cn.wuxia.project.security.core.user.enums.UserOperationEnum;
 import cn.wuxia.project.security.core.user.enums.UserTypeEnum;
 import cn.wuxia.project.security.core.user.service.AdminUserService;
 import cn.wuxia.tools.excel.ImportExcelUtil;
@@ -49,9 +47,6 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
 
     @Autowired
     SecurityUserService securityUserService;
-
-    @Autowired
-    private UserOperationHistoryService userOperationHistoryService;
 
     @Autowired
     private CustomTagCategoryService tagCategoryService;
@@ -114,8 +109,8 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
          * 保存有效后再推送到CAS
          */
         // 记录用户操作：用户注册
-        userOperationHistoryService.saveUserOperation(user.getId(), UserOperationEnum.ZHUCE.name(),
-                UserOperationEnum.ZHUCE.getDisplayValue());
+//        userOperationHistoryService.saveUserOperation(user.getId(), UserOperationEnum.ZHUCE.name(),
+//                UserOperationEnum.ZHUCE.getDisplayValue());
         // 注册成功发送邮件
         // registerRemind(userd, user.getRegisterTime());
         logger.info("完成注册......{}", securityUser.getAccountName());

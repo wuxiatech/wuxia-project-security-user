@@ -26,8 +26,13 @@ public class UserLoginedServiceImpl implements UserLoginedService {
 
     @Autowired
     protected UserLoginedDao userLoginedDao;
-    @Autowired
+
     protected UserOperationHistoryService operationHistoryService;
+
+    @Autowired(required = false)
+    public void setOperationHistoryService(UserOperationHistoryService operationHistoryService) {
+        this.operationHistoryService = operationHistoryService;
+    }
 
     /**
      * 验证密码
@@ -73,8 +78,9 @@ public class UserLoginedServiceImpl implements UserLoginedService {
                 myUserDetails.isEnabled(), myUserDetails.isAccountNonExpired(), myUserDetails.isCredentialsNonExpired(),
                 myUserDetails.isAccountNonLocked(), myUserDetails.getAuthorities());
         copyPropertiesFromUserToUserDetails((AdminUserLoginedData) loginedDataBean, doctorLoginedDetails);
-
-        operationHistoryService.saveUserOperation(loginedDataBean.getId(), UserOperationEnum.DENGLU.name(), "登录后台");
+        if (operationHistoryService != null) {
+            operationHistoryService.saveUserOperation(loginedDataBean.getId(), UserOperationEnum.DENGLU.name(), "登录后台");
+        }
         return doctorLoginedDetails;
     }
 
