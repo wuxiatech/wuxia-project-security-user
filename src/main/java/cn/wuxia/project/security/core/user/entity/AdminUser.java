@@ -1,22 +1,14 @@
 package cn.wuxia.project.security.core.user.entity;
 
+import cn.wuxia.project.common.model.ModifyInfoEntity;
+import cn.wuxia.project.security.core.user.enums.UserGenderEnum;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import cn.wuxia.project.security.core.user.enums.UserTypeEnum;
-import cn.wuxia.project.security.core.user.enums.UserGenderEnum;
-import cn.wuxia.project.common.model.ModifyInfoEntity;
-import org.hibernate.validator.constraints.Length;
 
 /**
  * The persistent class for the u_user database table.
@@ -60,7 +52,7 @@ public class AdminUser extends ModifyInfoEntity implements Serializable {
 
     private Boolean status;
 
-    private UserTypeEnum type;
+    private String type;
 
     private String openid;
 
@@ -224,12 +216,11 @@ public class AdminUser extends ModifyInfoEntity implements Serializable {
         this.status = status;
     }
 
-    @Enumerated(EnumType.STRING)
-    public UserTypeEnum getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(UserTypeEnum type) {
+    public void setType(String type) {
         this.type = type;
     }
 

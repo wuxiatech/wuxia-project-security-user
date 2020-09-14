@@ -31,9 +31,9 @@ public class AdminUserDao extends BaseCommonDao<AdminUser, String> {
 
 
     public List<AdminUser> findAllUser(String appid) {
-        String hql = "from AdminUser WHERE type = ? order by order_";
+//        String hql = "from AdminUser WHERE type = ? order by order_";
         String sql = "SELECT * FROM u_admin_user WHERE appid=? and type=? ORDER BY ORDER_";
-        return query(sql, AdminUser.class, appid, UserTypeEnum.NORMAL);
+        return query(sql, AdminUser.class, appid, UserTypeEnum.NORMAL.name());
         // return find(hql, UserTypeEnum.DOCTOR);
     }
 

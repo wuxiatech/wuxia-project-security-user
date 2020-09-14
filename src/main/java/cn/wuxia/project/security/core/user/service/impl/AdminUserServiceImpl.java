@@ -26,7 +26,6 @@ import cn.wuxia.project.security.core.user.bean.ListUsers;
 import cn.wuxia.project.security.core.user.bean.RegisterUserDto;
 import cn.wuxia.project.security.core.user.dao.AdminUserDao;
 import cn.wuxia.project.security.core.user.entity.AdminUser;
-import cn.wuxia.project.security.core.user.enums.UserTypeEnum;
 import cn.wuxia.project.security.core.user.service.AdminUserService;
 import cn.wuxia.tools.excel.ImportExcelUtil;
 import com.google.common.collect.Lists;
@@ -273,7 +272,7 @@ public class AdminUserServiceImpl extends CommonServiceImpl<AdminUser, String> i
             }
             doc.setGoodAt(StringUtil.join(ga, "，"));
 
-            doc.setType(UserTypeEnum.getByType(importBean.getType()));
+            doc.setType(importBean.getType());
             docs.add(doc);
             if (jodd.util.StringUtil.isBlank(doc.getMobile())) {
                 doc.setMobile(doc.getRealName());

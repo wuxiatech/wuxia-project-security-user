@@ -10,7 +10,6 @@ package cn.wuxia.project.security.core.user.bean;
 
 import cn.wuxia.common.validator.ValidationEntity;
 import cn.wuxia.project.security.core.user.enums.UserGenderEnum;
-import cn.wuxia.project.security.core.user.enums.UserTypeEnum;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -69,7 +68,7 @@ public class RegisterUserDto extends ValidationEntity implements Serializable {
     private Boolean status;
 
     @JsonIgnore
-    private UserTypeEnum type;
+    private String type;
 
     private String description;
 
